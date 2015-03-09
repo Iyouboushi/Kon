@@ -1,0 +1,9 @@
+c:\users\james\documents\visual studio 2013\Projects\Kon\Kon\bin\Debug\Kon.exe.config
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.csprojResolveAssemblyReference.cache
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.Properties.Resources.resources
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.csproj.GenerateResource.Cache
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\bin\Debug\Kon.exe
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\bin\Debug\Kon.pdb
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.exe
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.pdb
+C:\Users\James\Documents\Visual Studio 2013\Projects\Kon\Kon\obj\Debug\Kon.frmMain.resources

@@ -2,16 +2,28 @@
 * text=auto
 
 # Custom for Visual Studio
-*.cs     diff=csharp
+*.cs     eol=crlf
+*.sln    eol=crlf
+*.cfg    eol=crlf
 
 # Standard to msysgit
-*.doc	 diff=astextplain
-*.DOC	 diff=astextplain
+*.doc  diff=astextplain
+*.DOC  diff=astextplain
 *.docx diff=astextplain
 *.DOCX diff=astextplain
 *.dot  diff=astextplain
 *.DOT  diff=astextplain
 *.pdf  diff=astextplain
-*.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+*.PDF  diff=astextplain
+*.rtf  diff=astextplain
+*.RTF  diff=astextplain
+
+*.als eol=crlf
+*.dat eol=crlf
+*.mrc eol=crlf
+*.db eol=crlf
+*.lst eol=crlf
+*.txt eol=crlf
+*.default eol=crlf
+*.char eol=crlf
+*.ini eol=crlf
