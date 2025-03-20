@@ -97,6 +97,7 @@ everyone commands.
 
 
 * ADMIN LEVEL COMMANDS
+
 !addUser nick
 Will add the nick specified to the user-level list.
 
@@ -117,6 +118,7 @@ Allows you to send a raw IRC command
 
 
 * USER LEVEL COMMANDS
+
 !toggleLB
 Will turn on the Language Bot ("LB") Brain on/off.  Turning this brain on will
 turn the others off.
@@ -155,6 +157,7 @@ useful for myself, but you might find it interesting.
 
 
 * EVERYONE LEVEL COMMANDS
+
 !splash
 Will cause the bot to utter its namesake's catch phrase from Bleach.
 
