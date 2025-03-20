@@ -11,7 +11,7 @@
 // James Iyouboushi.                          //
 // Email: Iyouboushi@gmail.com                //
 ////////////////////////////////////////////////
-// This file was last updated on: 03/19/2025  //
+// This file was last updated on: 03/20/2025  //
 ////////////////////////////////////////////////
 
 
@@ -45,7 +45,7 @@ namespace Kon
         private        string          nickNameBckup       = "KonPlushie";
         private        string          tempNick            = "";
         private        string          channel             = "#KonBot";
-        private        string          version             = "Kon - Version 1.5.5 - created by James Iyouboushi [iyouboushi@gmail.com]";
+        private        string          version             = "Kon - Version 1.6.0 - created by James Iyouboushi [iyouboushi@gmail.com]";
         private        string          modifiedLine        = "";
         private        string          rawLine             = "";
         private        string          channelUsers;
