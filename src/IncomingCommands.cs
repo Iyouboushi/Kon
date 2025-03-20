@@ -11,7 +11,7 @@
 // James Iyouboushi.                          //
 // Email: Iyouboushi@gmail.com                //
 ////////////////////////////////////////////////
-// This file was last updated on: 03/19/2025  //
+// This file was last updated on: 03/20/2025  //
 ////////////////////////////////////////////////
 
 using System;
@@ -94,8 +94,8 @@ namespace Kon
             // Let's check to see if it's a user command first.  Now, if it happens to be !addUser or !remUser we 
             // need to send the user the admin is trying to add/remove.  Else, 
 
-            if (((((command == "!ADDUSER") || (command == "!REMUSER") || (command == "!THROW") || (command == "!ROLL") || (command == "!RANDOMTALK") || (command == "!JOIN") || (command == "!PART")))))
-                userCommand(command, commandString[1].ToString(), nick, location);
+            if ((((((command == "!ADDUSER") || (command == "!REMUSER") || (command == "!THROW") || (command == "!ROLL") || (command == "!DICE") || (command == "!RANDOMTALK") || (command == "!JOIN") || (command == "!PART"))))))
+                userCommand(command, commandString.Length > 1 ? string.Join(" ", commandString, 1, commandString.Length - 1) : "", nick, location);
             else if ((((command == "!RAW") || (command == "!MSG") || (command == "!HAIKU") || (command == "!MSN"))))
                 userCommand(command, message, nick, location);
             else
@@ -295,37 +295,73 @@ namespace Kon
                 Console.WriteLine(">> " + channel + " : Kon Splash!");
             }
 
-            // !throw
+            // !throw [line #] [Target]
             if (command.StartsWith("!THROW"))
             {
                 Thread.Sleep(1000); // Prevent flooding
 
                 try
                 {
-                    string[] throwItems = File.ReadAllLines("throwitems.txt"); // Read all lines from the file
+                    // Read all the lines from the file and store them in an array
+                    string[] throwItems = File.ReadAllLines("throwitems.txt"); 
 
+                    // If the file isn't empty let's move on..
                     if (throwItems.Length > 0)
                     {
+                        
                         Random rand = new Random();
-                        int randomIndex = rand.Next(throwItems.Length); // Pick a random line index
-                        string randomItem = throwItems[randomIndex].Trim(); // Get item and remove any extra spaces
-                        randomIndex++;
+                        int randomIndex = rand.Next(throwItems.Length);
 
-                        // Extract the target name (if provided)
-                        string targetName = commandParam;
+                        // Split commandParam into potential line number and target
+                        string[] commandParts = commandParam.Split(new char[] { ' ' }, 2);
+  
+                        int lineNumber = 0;
+                        string targetName = "";
+
+                        // Check if the first part is a valid line number (such as !throw 25)
+                        if (commandParts.Length > 0 && int.TryParse(commandParts[0], out lineNumber))
+                        {
+                            // Ensure the line number is within the valid range of the file
+                            if (lineNumber > 0 && lineNumber <= throwItems.Length)
+                            {
+                                randomIndex = lineNumber - 1; // Adjust for zero-based index
+                            }
+                            else
+                            {
+                                sendToChannel($"Kon can't throw item # {lineNumber}, invalid line number!", location);
+                                return;
+                            }
+
+                            // If a target was specified let's set that now. (such as !throw 25 Iyouboushi)
+                            if (commandParts.Length > 1)
+                            {
+                                targetName = commandParts[1].Trim();
+                            }
+                        }
+                        else
+                        {
+                            // If no number is detected, then just set the target to the commandParam
+                            targetName = commandParam.Trim();
+                        }
+
+                        // Get the item and remove any extra spaces
+                        string randomItem = throwItems[randomIndex].Trim(); 
+                        randomIndex++; 
 
                         // If no target is provided, pick a random user from the channel
-                        if ((targetName == null) || (targetName == ""))
+                        if (string.IsNullOrWhiteSpace(targetName))
                         {
                             targetName = randomChannelUser();
 
-                            if (targetName == null)
+                            if (string.IsNullOrWhiteSpace(targetName))
                             {
-                                targetName = "someone"; // Fallback if no users found
+                                // If no users are found let's just use "someone"
+                                targetName = "someone"; 
                             }
-
                         }
-                        string message = $"\u0001ACTION throws " + randomItem + " [Random item # " + randomIndex + "] at " + targetName;
+
+                        // Send the message with the line number and target
+                        string message = $"\u0001ACTION throws {randomItem} [Random item # {randomIndex}] at {targetName}";
                         sendToChannel(message, location);
                         Console.WriteLine($">> {channel} : {message}");
                     }
@@ -341,12 +377,62 @@ namespace Kon
                 }
             }
 
-            // !roll
-            if (command == "!ROLL")
+            // !roll XdY (e.g., !roll 2d6)
+            if ((command.StartsWith("!ROLL")) || (command.StartsWith("!DICE")))
             {
-                Thread.Sleep(1000);   // throttle it so it won't commit a flood if tons of people use it.
-                sendToChannel("To be added!", location);
+                Thread.Sleep(1000); // Prevent flooding
+
+                try
+                {
+                    string rollInput = commandParam.Replace("!roll ", "").Trim();
+                    int total = 0;
+                    string resultString = "";
+
+                    // Ensure valid format XdY (e.g., 2d6)
+                    if (rollInput.Contains("d"))
+                    {
+                        string[] parts = rollInput.Split('d');
+
+                        if (parts.Length == 2 && int.TryParse(parts[0], out int rolls) && int.TryParse(parts[1], out int limit))
+                        {
+                            if (rolls > 0 && limit > 0) // Ensure valid dice numbers
+                            {
+                                Random rand = new Random();
+
+                                for (int i = 0; i < rolls; i++)
+                                {
+                                    int number = rand.Next(1, limit + 1);
+                                    total += number;
+                                    resultString += (i == 0) ? $"{number}" : $", {number}";
+                                }
+
+                                // Send roll results
+                                string message = $"{nick} rolled {rolls}d{limit}: {resultString} (Total: {total})";
+                                sendToChannel(message, location);
+                                Console.WriteLine($">> {channel} : {message}");
+                            }
+                            else
+                            {
+                                sendToChannel("Invalid dice format! Use !roll XdY (e.g., !roll 2d6)", location);
+                            }
+                        }
+                        else
+                        {
+                            sendToChannel("Invalid dice format! Use !roll XdY (e.g., !roll 2d6)", location);
+                        }
+                    }
+                    else
+                    {
+                        sendToChannel("Invalid dice format! Use !roll XdY (e.g., !roll 2d6)", location);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error processing !roll command: " + ex.Message);
+                    sendToChannel("An error occurred while rolling the dice!", location);
+                }
             }
+
 
             // Haiku!
             if (command == "!HAIKU")
