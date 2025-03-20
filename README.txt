@@ -177,8 +177,9 @@ is too short.  Recommended to leave this off until the bot's LB brain is big
 enough to handle it, or else you'll get repeating lines back to back.
 
 !Dinfo
-Will show a few tidbits of internal info (reconnect attempt/total, if ping control is set to true,
-and the # of ping attempts so far).   Really only useful for myself, but you might find it interesting.
+Will show a few tidbits of internal info (reconnect attempt/total, if ping 
+control is set to true, and the # of ping attempts so far).   Really only 
+useful for myself, but you might find it interesting.
 
 
 * EVERYONE LEVEL COMMANDS
@@ -196,12 +197,17 @@ Will display the number of lines in the LB Brain.  LB Brain must be on in
 order to use this command.
 
 !haiku
-Will cause the bot to attempt to create a haiku using the 5/7/5 syllable structure.  It's not
-perfect and the counts will often be a little off but it's a start. Needs the LB Brain to be
-on in order to work properly.
+Will cause the bot to attempt to create a haiku using the 5/7/5 syllable structure.
+It's not perfect and the counts will often be a little off but it's a start. 
+Needs the LB Brain to be on in order to work properly.
 
-!throw
-Will pick a random item from throwitems.txt to "throw" at a random channel user.
+!throw [#] [Target]
+Will pick a random item from throwitems.txt to "throw" at a random channel user. 
+Can specify the line # if you want to throw a specific item and/or a target to 
+pick a specific person.
+
+!roll #d#  or !dice #d#
+Will return a dice roll.  Use it like !roll 1d20 or !dice 2d4
 
 
  _______________________________________________________________________
@@ -255,6 +261,7 @@ For a complete list, read changelog.txt.
 
 * Added !throw as a command anyone can use.  Will randomly throw an item 
   from throwitems.txt at a random channel user.
+* Added !dice #d# and !roll #d#
 * Removed Twitter, AIML and any other things that Kon no longer uses/needs. 
 
 

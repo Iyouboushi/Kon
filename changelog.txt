@@ -289,4 +289,5 @@
 
 1.6.0
 - Added !throw as a command anyone can use.  Will randomly throw an item from throwitems.txt at a random channel user.
+- Added !dice and !roll as a command anyone can use. Will roll dice. Use !roll #d# or !dice #d#
 - Removed Twitter, AIML and any other things that Kon no longer uses/needs. 
